@@ -30,15 +30,15 @@ Graph *scan_graph();
  * Prints a graph to standard out.
  *
  * @param[in]   graph
- *      a pointer to the graph to display
+ *     a pointer to the graph to display
  */
 void print_graph(Graph *graph);
 
 /**
- * Frees the space associated with the specified graph structure
+ * Frees the space associated with the specified graph structure.
  *
  * @param[in]   graph
- *      a pointer to the graph to free
+ *     a pointer to the graph to free
  */
 void free_graph(Graph *graph);
 

@@ -13,7 +13,7 @@
 struct node {
 	/** represents the city in this problem */
 	int dest;
-	/** weight of the edge from src to dest if node is in list src */
+	/** weight of the edge from src to dest if node is in list indexed by src */
 	int dist;
 	/** next node adjacent to src in linked list */
 	struct node *next;
@@ -100,14 +100,14 @@ static Graph *graph_init(int vertices)
 	return graph;
 }
 
-/** Add an edge from 'from' to 'to' with given weight */
+/** Add an edge from 'from' to 'to' with specified weight */
 static Boolean graph_add_edge(Graph *graph, int from, int to, int weight)
 {
 	if (from >= graph->vertices || to >= graph->vertices) {
 		return FALSE;
 	}
 
-	/* Add nodes to front of list list */
+	/* Add node to front of linked list indexed by from */
 	Node *n1 = (Node *) malloc(sizeof(Node));
 
 	if (n1 == NULL) {
