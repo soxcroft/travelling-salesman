@@ -25,19 +25,19 @@ typedef struct stack Stack;
 Partial_tour *tour_init(int n);
 
 /**
- * Adds a city to the partial tour.
+ * Adds a city to the specified partial tour.
  *
  * @param[in]   tour
  *     a pointer to the tour whose route we should append to
  * @param[in]   city
  *     the city which should be added to the partial tour
  * @param[in]   weight
- *     the weight of the edge which leads to 'city'
+ *     the weight of the edge which leads to the city
  */
 void add_city(Partial_tour *tour, int city, int weight);
 
 /**
- * Removes the last city visited in the partial tour.
+ * Removes the last city visited in the specified partial tour.
  *
  * @param[in]   tour
  *     a pointer to the tour whose last city should be removed
@@ -94,6 +94,19 @@ void push_copy(Stack *stack, Partial_tour *tour);
  *     a pointer to the partial tour where the top element can be copied to
  */
 void pop(Stack *stack, Partial_tour *tour);
+
+/**
+ * Pops the bottom element from the stack and copies the data to the partial tour
+ * structure pointed to by tour. A bit ad hoc and inefficient but it will only
+ * get used when running a BFS from the inital position to generate enough
+ * partial tours to distribute among all the threads.
+ *
+ * @param[in]   stack
+ *     the stack whose bottom element should be removed
+ * @param[out]  tour
+ *     a pointer to the partial tour where the bottom element can be copied to
+ */
+void pop_front(Stack *stack, Partial_tour *tour);
 
 /**
  * Splits the partial tours in old_stack between old_stack and new_stack in a

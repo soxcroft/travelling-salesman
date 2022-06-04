@@ -15,7 +15,7 @@ struct partial_tour {
 	int *cities;
 	/** number of cities in partial tour */
 	int count;
-	/** sum of the edges traversed in partial tour */
+	/** sum of the weights of edges traversed in partial tour */
 	int cost;
 };
 
@@ -82,7 +82,7 @@ Stack *stack_init(int n)
 	
 	/* Set up initial values for stack. The number of partial tours on the stack
 	 * is capped at n^2/2, and we would rather allocate the memory now than
-	 * constantly allocate and free */
+	 * constantly allocate and free partial tours at the top of the stack. */
 	stack->size = 0;
 	stack->max_size = n*n/2;
 	stack->tours = (Partial_tour **) malloc(sizeof(Partial_tour *) * (n*n/2));
@@ -112,6 +112,23 @@ void pop(Stack *stack, Partial_tour *tour)
 	Partial_tour *copy = stack->tours[--stack->size];
 
 	/* copy the tour which was on top of the stack to 'tour' */
+	tour->cost = copy->cost;
+	tour->count = copy->count;
+	for (int i = 0; i < copy->count; i++) {
+		tour->cities[i] = copy->cities[i];
+	}
+}
+
+void pop_front(Stack *stack, Partial_tour *tour)
+{
+	/* remove the bottom element from the stack */
+	Partial_tour *copy = stack->tours[0];
+	for (int i = 0; i < stack->size - 1; i++) {
+		stack->tours[i] = stack->tours[i+1];
+	}
+	stack->tours[--stack->size] = copy;
+
+	/* copy to tour */
 	tour->cost = copy->cost;
 	tour->count = copy->count;
 	for (int i = 0; i < copy->count; i++) {

@@ -54,6 +54,10 @@ int main() {
 			pop(stack, tour);
 			printf("Popped: ");
 			print_tour(tour);
+		} else if (strcmp(buffer, "pop_front") == 0) {
+			pop_front(stack, tour);
+			printf("Popped: ");
+			print_tour(tour);
 		} else if (strcmp(buffer, "split") == 0) {
 			split_stack(stack, helper_stack);
 			printf("Old stack:\n");

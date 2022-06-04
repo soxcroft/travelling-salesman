@@ -53,6 +53,22 @@ Graph *scan_graph()
 	return graph;
 }
 
+Graph *build_graph(int v, int e, int **edges)
+{
+	Graph *graph = graph_init(v);
+	for (int i = 0; i < e; i++) {
+		if (!graph_add_edge(graph, edges[i][0], edges[i][1], edges[i][2])) {
+			printf("Could not add edge from %d to %d with weight %d\n",
+					edges[i][0], edges[i][1], edges[i][2]);
+		}
+		if (!graph_add_edge(graph, edges[i][1], edges[i][0], edges[i][2])) {
+			printf("Could not add edge from %d to %d with weight %d\n",
+					edges[i][1], edges[i][0], edges[i][2]);
+		}
+	}
+	return graph;
+}
+
 void print_graph(Graph *graph)
 {
 	for (int i = 0; i < graph->vertices; i++) {

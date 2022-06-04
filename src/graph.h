@@ -27,6 +27,22 @@ typedef struct graph Graph;
 Graph *scan_graph();
 
 /**
+ * Allocates and returns a graph with v vertices, e edges, which are specified
+ * by the edges array (edges[i][0] is connected to edges[i][1] with weight
+ * edges[i][2]). Added because it will be much easier to send an array to a
+ * process that they can build the graph with than the graph structure itself.
+ *
+ * @param[in]   v
+ *     the number of vertices in the graph
+ * @param[in]   e
+ *     the number of edges in the graph
+ * @param[in]   edges
+ *     an array of edges and edge weights
+ * @return      an adjacency list representation of the specified graph
+ */
+Graph *build_graph(int v, int e, int **edges);
+
+/**
  * Prints a graph to standard out.
  *
  * @param[in]   graph
