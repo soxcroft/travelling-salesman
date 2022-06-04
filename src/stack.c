@@ -17,6 +17,10 @@ struct partial_tour {
 	int count;
 	/** sum of the weights of edges traversed in partial tour */
 	int cost;
+	/** the maximum number of cities which can be visited */
+	int max_count;
+	/** array of visited status */
+	int *visited;
 };
 
 /** a stack of partial tours container */
@@ -40,8 +44,37 @@ Partial_tour *tour_init(int n)
 	tour->cities = (int *) malloc(sizeof(int) * n);
 	tour->count = 0;
 	tour->cost = 0;
+	tour->max_count = n;
+	tour->visited = (int *) malloc(sizeof(int) * n);
+	for (int i = 0; i < n; i++) {
+		tour->visited[i] = 0;
+	}
 
 	return tour;
+}
+
+int last_city(Partial_tour *tour)
+{
+	if (tour->count == 0) {
+		return -1;
+	} else {
+		return tour->cities[tour->count-1];
+	}
+}
+
+int visited(Partial_tour *tour, int city)
+{
+	return tour->visited[city];
+}
+
+int tour_count(Partial_tour *tour)
+{
+	return tour->count;
+}
+
+int tour_cost(Partial_tour *tour)
+{
+	return tour->cost;
 }
 
 void add_city(Partial_tour *tour, int city, int weight)
@@ -49,13 +82,15 @@ void add_city(Partial_tour *tour, int city, int weight)
 	/* add city to partial tour and update weight */
 	tour->cities[tour->count++] = city;
 	tour->cost += weight;
+	tour->visited[city] = 1;
 }
 
 void remove_city(Partial_tour *tour, int weight)
 {
 	/* remove last city in partial tour and update cost */
+	int city = tour->cities[--tour->count];
 	tour->cost -= weight;
-	tour->count--;
+	tour->visited[city] = 0;
 }
 
 void print_tour(Partial_tour *tour)
@@ -72,6 +107,7 @@ void print_tour(Partial_tour *tour)
 void free_tour(Partial_tour *tour)
 {
 	free(tour->cities);
+	free(tour->visited);
 	free(tour);
 }
 
@@ -93,6 +129,11 @@ Stack *stack_init(int n)
 	return stack;
 }
 
+int stack_size(Stack *stack)
+{
+	return stack->size;
+}
+
 void push_copy(Stack *stack, Partial_tour *tour)
 {
 	/* get pointer to top of stack and update stack size */
@@ -103,6 +144,9 @@ void push_copy(Stack *stack, Partial_tour *tour)
 	copy->count = tour->count;
 	for (int i = 0; i < tour->count; i++) {
 		copy->cities[i] = tour->cities[i];
+	}
+	for (int i = 0; i < tour->max_count; i++) {
+		copy->visited[i] = tour->visited[i];
 	}
 }
 
@@ -116,6 +160,9 @@ void pop(Stack *stack, Partial_tour *tour)
 	tour->count = copy->count;
 	for (int i = 0; i < copy->count; i++) {
 		tour->cities[i] = copy->cities[i];
+	}
+	for (int i = 0; i < copy->max_count; i++) {
+		tour->visited[i] = copy->visited[i];
 	}
 }
 
@@ -133,6 +180,9 @@ void pop_front(Stack *stack, Partial_tour *tour)
 	tour->count = copy->count;
 	for (int i = 0; i < copy->count; i++) {
 		tour->cities[i] = copy->cities[i];
+	}
+	for (int i = 0; i < copy->max_count; i++) {
+		tour->visited[i] = copy->visited[i];
 	}
 }
 
@@ -153,7 +203,7 @@ void split_stack(Stack *old_stack, Stack *new_stack)
 
 void print_stack(Stack *stack)
 {
-	printf("STACK size %d\n", stack->size);
+	printf("size %d\n", stack->size);
 	for (int i = 0; i < stack->size; i++) {
 		printf("%d: ", i);
 		print_tour(stack->tours[i]);

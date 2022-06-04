@@ -69,6 +69,30 @@ Graph *build_graph(int v, int e, int **edges)
 	return graph;
 }
 
+Boolean adj(Graph *graph, int *city, int *neighbour, int *cost)
+{
+	static Node *n;
+
+	if (city != NULL) {
+		if (*city < 0 || *city >= graph->vertices) {
+			return FALSE;
+		}
+		n = graph->nodes[*city];
+	} /* else it has already been cached */
+
+	/* return if next adjacent node does not exist */
+	if (n == NULL) {
+		return FALSE;
+	}
+
+	/* read values of adjacent node into pointers */
+	*neighbour = n->dest;
+	*cost = n->dist;
+	n = n->next;
+
+	return TRUE;
+}
+
 void print_graph(Graph *graph)
 {
 	for (int i = 0; i < graph->vertices; i++) {

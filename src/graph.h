@@ -43,6 +43,22 @@ Graph *scan_graph();
 Graph *build_graph(int v, int e, int **edges);
 
 /**
+ * If there is a another node adjacent to city, read its destination into
+ * neighbour and distance to it into cost.
+ *
+ * @param[in]   graph
+ *     a pointer to the underlying graph
+ * @param[in]   city
+ *     the city whose neighbours we would like to visit
+ * @param[out]  neighbour
+ *     the next neighbour of specified city
+ * @param[out]  cost
+ *     the weight of the edge between the city and its next neighbour
+ * @return      true if a neighbour was visited, else false
+ */
+Boolean adj(Graph *graph, int *city, int *neighbour, int *cost);
+
+/**
  * Prints a graph to standard out.
  *
  * @param[in]   graph

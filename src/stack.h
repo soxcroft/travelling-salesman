@@ -25,6 +25,45 @@ typedef struct stack Stack;
 Partial_tour *tour_init(int n);
 
 /**
+ * Return the last city visited in the specified partial tour.
+ *
+ * @param[in]   tour
+ *     a pointer to the partial tour.
+ * @return      the index of the city
+ */
+int last_city(Partial_tour *tour);
+
+/**
+ * Returns whether or not a city has been visited in the specified tour.
+ *
+ * @param[in]   tour
+ *     a pointer to the partial tour
+ * @param[in]   city
+ *     the index of the city
+ * @return      true (1) if city has been visited, else false
+ */
+int visited(Partial_tour *tour, int city);
+
+/**
+ * Returns the number of cities which have been visited in the specified partial
+ * tour.
+ *
+ * @param[in]   tour
+ *     a pointer to the partial tour
+ * @return      the number of cities which have been visited in the tour
+ */
+int tour_count(Partial_tour *tour);
+
+/**
+ * Returns the cost of the specified partial tour.
+ *
+ * @param[in]   tour
+ *     a pointer to the partial tour
+ * @return      the cost of the partial tour
+ */
+int tour_cost(Partial_tour *tour);
+
+/**
  * Adds a city to the specified partial tour.
  *
  * @param[in]   tour
@@ -72,6 +111,15 @@ void free_tour(Partial_tour *tour);
  * @return      a pointer to a stack structure
  */
 Stack *stack_init(int n);
+
+/**
+ * Get the size of a stack.
+ *
+ * @param[in]   stack
+ *     a pointer to a stack
+ * @return      the size of the stack
+ */
+int stack_size(Stack *stack);
 
 /**
  * Copies the data associated with the partial tour and adds it to the top of

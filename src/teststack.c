@@ -25,11 +25,13 @@ int main() {
 	add_city(tour, 0, 0);
 	push_copy(stack, tour);
 
-	printf("Type \"quit <Enter>\" to exit\n");
-	printf("Type \"push <Enter>\" to add a partial tour onto the stack\n");
-	printf("Type \"pop <Enter>\" to remove and display the top of the stack\n");
-	printf("Type \"split <Enter>\" to split and display the stacks\n");
-	printf("Type \"print <Enter>\" to display the partial tours in the stack\n");
+	printf("Actions\n=======\n");
+	printf("print                            -- display the partial tours on the stack\n");
+	printf("push <cities> <city> <weight>... -- add <cities> copies of top of stack with <city> and <weight> appended to it\n");
+	printf("pop                              -- remove the top tour from the stack \n");
+	printf("pop_front                        -- remove the bottom tour from the stack\n");
+	printf("split                            -- split the stack in half\n");
+	printf("quit                             -- quit program\n");
 
 	printf(">> ");
 	scanf("%s", buffer);
