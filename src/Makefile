@@ -7,19 +7,24 @@ DEBUG    = -ggdb
 OPTIMISE = -O2
 WARNINGS = -Wall -Wextra -Wno-variadic-macros -Wno-overlength-strings -pedantic
 CFLAGS   = $(DEBUG) $(OPTIMISE) $(WARNINGS)
-#DFLAGS = -TODO
+DFLAGS   = -DDEBUG
 
 CC       = clang
+MPICC    = mpicc
 RM       = rm -f
-COMPILE  = $(CC) $(CFLAGS) $(DFLAGS)
+#COMPILE  = $(CC) $(CFLAGS) $(DFLAGS)
+COMPILE  = $(MPICC) $(CFLAGS) $(DFLAGS)
 INSTALL  = install
 
 # files
-EXES = testgraph teststack
+EXES = tsp testgraph teststack
 
 BINDIR = ../bin
 
 # RULES
+
+tsp: tsp.c stack.o graph.o | $(BINDIR)
+	$(COMPILE) -o $(BINDIR)/$@ $^
 
 teststack: teststack.c stack.o | $(BINDIR)
 	$(COMPILE) -o $(BINDIR)/$@ $^
